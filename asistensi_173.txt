@@ -1,0 +1,94 @@
+
+Setting environment for using XAMPP for Windows.
+LABFIK@DESKTOP-DIHRN1K c:\xampp
+# mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 8
+Server version: 10.4.28-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> create database `13020220173`;
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [(none)]> use 13020220173;
+Database changed
+MariaDB [13020220173]> create table buku(idBuku varchar(45) primary key, judulBuku varchar(45),
+    -> namaPenulis varchar(45));
+Query OK, 0 rows affected (0.104 sec)
+
+MariaDB [13020220173]> drop table buku;
+Query OK, 0 rows affected (0.238 sec)
+
+MariaDB [13020220173]> create table mahasiswa(nim varchar(45) primary key, namaMahasiswa varchar(45),
+    -> alamat varchar(45), noTelepon char(12));
+Query OK, 0 rows affected (0.156 sec)
+
+MariaDB [13020220173]> create table dosen(idDosen varchar(45) primary key, namaDosen varchar(45),
+    -> noTelepon char(12));
+Query OK, 0 rows affected (0.149 sec)
+
+MariaDB [13020220173]> create table mataKuliah(namaMahasiswa varchar(45) primary key, namaMataKuliah varchar(45),
+    -> jadwalMataKuliah date, namaDosen varchar(45), foreign key mahasiswa(namaMahasiswa) references mataKuliah
+    -> (namaMahasiswa), foreign key dosen(namaDosen) references mataKuliah(namaDosen));
+ERROR 1005 (HY000): Can't create table `13020220173`.`matakuliah` (errno: 150 "Foreign key constraint is incorrectly formed")
+MariaDB [13020220173]> create table mataKuliah(namaMahasiswa varchar(45) primary key, namaMataKuliah varchar(45),
+    -> jadwalMataKuliah date, namaDosen varchar(45));
+Query OK, 0 rows affected (0.142 sec)
+
+MariaDB [13020220173]> alter table add foreign key mataKuliah(namaDosen) references dosen(namaDosen);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'add foreign key mataKuliah(namaDosen) references dosen(namaDosen)' at line 1
+MariaDB [13020220173]> alter table add foreign key table mataKuliah(namaDosen) references table dosen(namaDosen);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'add foreign key table mataKuliah(namaDosen) references table dosen(namaDosen)' at line 1
+MariaDB [13020220173]> drop table dosen;
+Query OK, 0 rows affected (0.117 sec)
+
+MariaDB [13020220173]> create table dosen(idDosen varchar(45) primary key, namaDosen varchar(45),
+    -> noTelepon char(12));
+Query OK, 0 rows affected (0.120 sec)
+
+MariaDB [13020220173]> drop table mataKuliah;
+Query OK, 0 rows affected (0.102 sec)
+
+MariaDB [13020220173]> create table mataKuliah(namaMahasiswa varchar(45), namaMataKuliah varchar(45),
+    -> jadwalMataKuliah date, namaDosen varchar(45), foreign key (namaMhasiswa) references mahasiswa(namaMahasiswa),
+    -> foreign key (namaDosen) references dosen(namaDosen));
+ERROR 1072 (42000): Key column 'namaMhasiswa' doesn't exist in table
+MariaDB [13020220173]> create table mataKuliah(namaMahasiswa varchar(45), namaMataKuliah varchar(45),
+    -> jadwalMataKuliah date, namaDosen varchar(45), foreign key (namaMahasiswa) references mahasiswa(namaMahasiswa),
+    -> foreign key (namaDosen) references dosen(namaDosen));
+ERROR 1005 (HY000): Can't create table `13020220173`.`matakuliah` (errno: 150 "Foreign key constraint is incorrectly formed")
+MariaDB [13020220173]> create table mataKuliah(namaMahasiswa varchar(45), namaMataKuliah varchar(45),
+    -> jadwalMataKuliah date, namaDosen varchar(45), foreign key (namaMahasiswa) references mahasiswa(namaMahasiswa));
+ERROR 1005 (HY000): Can't create table `13020220173`.`matakuliah` (errno: 150 "Foreign key constraint is incorrectly formed")
+MariaDB [13020220173]> create table mataKuliah(namaMahasiswa varchar(45) primary key, namaMataKuliah varchar(45),
+    -> jadwalMataKuliah date, namaDosen varchar(45) foreign key (namaMahasiswa) references mahasiswa(namaMahasiswa));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'foreign key (namaMahasiswa) references mahasiswa(namaMahasiswa))' at line 2
+MariaDB [13020220173]> create table mataKuliah(namaMahasiswa varchar(45) primary key, namaMataKuliah varchar(45),
+    -> jadwalMataKuliah date, namaDosen varchar(45), foreign key (namaMahasiswa) references mahasiswa(namaMahasiswa))
+    -> ;
+ERROR 1005 (HY000): Can't create table `13020220173`.`matakuliah` (errno: 150 "Foreign key constraint is incorrectly formed")
+MariaDB [13020220173]> create table mataKuliah(namaMahasiswa varchar(45) primary key, namaMataKuliah varchar(45),
+    -> jadwalMataKuliah date, namaDosen varchar(45), foreign key constraint mataKuliah(namaMahasiswa) references mahasiswa(namaMahasiswa));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'constraint mataKuliah(namaMahasiswa) references mahasiswa(namaMahasiswa))' at line 2
+MariaDB [13020220173]> create table mataKuliah(namaMahasiswa varchar(45) primary key, namaMataKuliah varchar(45),
+    -> jadwalMataKuliah date, namaDosen varchar(45), foreign key namaMahasiswa references mahasiswa(namaMahasiswa));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'references mahasiswa(namaMahasiswa))' at line 2
+MariaDB [13020220173]> create table mataKuliah(namaMahasiswa varchar(45) primary key, namaMataKuliah varchar(45),
+    -> jadwalMataKuliah date, namaDosen varchar(45), foreign key (namaMahasiswa) references mahasiswa(namaMahasiswa));
+ERROR 1005 (HY000): Can't create table `13020220173`.`matakuliah` (errno: 150 "Foreign key constraint is incorrectly formed")
+MariaDB [13020220173]> create table mataKuliah(namaMahasiswa varchar(45), namaMataKuliah varchar(45),
+    -> jadwalMataKuliah date, namaDosen varchar(45), foreign key (namaMahasiswa) references mahasiswa(namaMahasiswa));
+ERROR 1005 (HY000): Can't create table `13020220173`.`matakuliah` (errno: 150 "Foreign key constraint is incorrectly formed")
+MariaDB [13020220173]> create table mataKuliah(namaMahasiswa varchar(45) primary key, namaMataKuliah varchar(45),
+    -> jadwalMataKuliah date, namaDosen varchar(45));
+Query OK, 0 rows affected (0.205 sec)
+
+MariaDB [13020220173]> alter table add foreign key (namaMahasiswa) references mataKuliah(namaMahasiswa));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'add foreign key (namaMahasiswa) references mataKuliah(namaMahasiswa))' at line 1
+MariaDB [13020220173]> alter table add foreign key (namaMahasiswa) references mataKuliah(namaMahasiswa);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'add foreign key (namaMahasiswa) references mataKuliah(namaMahasiswa)' at line 1
+MariaDB [13020220173]>
